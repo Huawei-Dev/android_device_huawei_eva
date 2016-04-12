@@ -49,7 +49,6 @@ on init
     mkdir /modem_log
     mkdir /mnvm2:0
 
-    symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
     write /sys/block/dm-0/queue/read_ahead_kb 2048
