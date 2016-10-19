@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!--
+ * Copyright (C) 2014 Huawei Inc.
+ * Cpu Freq Config
+ *
+                TYPE                                            AVALIABLE_VALUE
+        cpu_maxprofile                    480000 807000 1018000 1306000 1517000 1805000
+        cpu_minprofile                    480000 807000 1018000 1306000 1517000 1805000
+
+        cpu_a15_maxprofile                480000 807000 1210000 1517000 1805000 2016000 2304000
+        cpu_a15_minprofile                480000 807000 1210000 1517000 1805000 2016000 2304000
+
+        gpu_maxprofile                    120000000 240000000 360000000 480000000 650000000 800000000 900000000
+        gpu_minprofile                    120000000 240000000 360000000 480000000 650000000 800000000 900000000
+
+        ddr_maxprofile                    120000000 240000000 360000000 533000000 800000000 933000000
+        ddr_minprofile                    120000000 240000000 360000000 533000000 800000000 933000000
+
+        cpu_number_max                    1,2,3,4
+        cpu_number_min                    1,2,3,4
+        cpu_a15_number_max                0,1,2,3,4
+        cpu_a15_number_min                0,1,2,3,4
+
+        note:
+        1. if policy item has not configured, it means close cpupolicy of previous scene.
+        2. policy type default value is 0, policy value default value is -1
+        3. Don't set ddr_maxprofile for K3V3+ platform
+        4. Don't set <threshold_up>0</threshold_up> and <threshold_down>0</threshold_down> for K3V3+ platform
+        last modify time:2014-10-18
+-->
+
+<!-- scene id
+only support these scene
+
+10000    default, must config.
+10001    popular browser app
+10002    popular 3D game
+10003    popular ebook
+10007    popular camera
+10009    popular video
+10011    popular 2D Game
+
+20004   screen off
+
+id >= 100000  cust config, white list
+ -->
+
+<thermal version="2.3">
+
+     <scene name="default" id="10000">
+         <sensor_temp name="cpu" type="0" enable="true" min_temp="0" step="3">
+            <item>
+                <thresholds>40</thresholds>
+                <thresholds_clr>38</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                                        <camera_fps>0</camera_fps>
+                </action>
+            </item>
+            <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>1517000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                    <camera_fps>0</camera_fps>
+                </action>
+            </item>
+            <item>
+                <thresholds>46</thresholds>
+                <thresholds_clr>44</thresholds_clr>
+                <action>
+                    <cpu>1306000</cpu>
+                    <cpu_a15>807000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                    <camera_fps>1</camera_fps>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="ucurrent" type="2" enable="true" min_temp="0" step="5">
+              <item>
+                <thresholds>39</thresholds>
+                <thresholds_clr>37</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>55</thresholds>
+                <thresholds_clr>53</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="pa" type="1" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+        <sensor_temp name="flash" type="3" enable="true" min_temp="0" step="2">
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <flash>1</flash>
+                </action>
+            </item>
+        </sensor_temp>
+    </scene>
+
+     <scene name="video" id="10009">
+         <sensor_temp name="cpu" type="0" enable="true" min_temp="0" step="3">
+            <item>
+                <thresholds>38</thresholds>
+                <thresholds_clr>36</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>1517000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <cpu>1306000</cpu>
+                    <cpu_a15>807000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+         <sensor_temp name="pa" type="1" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+         <sensor_temp name="ucurrent" type="2" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+     </scene>
+
+    <scene name="browser" id="10001">
+        <sensor_temp name="cpu" type="0" enable="true" min_temp="0" step="3">
+            <item>
+                <thresholds>40</thresholds>
+                <thresholds_clr>38</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>1517000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>46</thresholds>
+                <thresholds_clr>44</thresholds_clr>
+                <action>
+                    <cpu>1306000</cpu>
+                    <cpu_a15>807000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+         <sensor_temp name="pa" type="1" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+        <sensor_temp name="ucurrent" type="2" enable="true" min_temp="0" step="5">
+              <item>
+                <thresholds>39</thresholds>
+                <thresholds_clr>37</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="flash" type="3" enable="true" min_temp="0" step="2">
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <flash>1</flash>
+                </action>
+            </item>
+        </sensor_temp>
+    </scene>
+
+    <scene name="camera" id="10007">
+        <sensor_temp name="cpu" type="0" enable="true" min_temp="0" step="3">
+            <item>
+                <thresholds>41</thresholds>
+                <thresholds_clr>39</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                                        <camera_fps>0</camera_fps>
+                </action>
+            </item>
+            <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>1</lcd>
+                    <camera_fps>0</camera_fps>
+                </action>
+            </item>
+            <item>
+                <thresholds>47</thresholds>
+                <thresholds_clr>45</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>2</lcd>
+                    <camera_fps>1</camera_fps>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+         <sensor_temp name="pa" type="1" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+        <sensor_temp name="ucurrent" type="2" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>41</thresholds>
+                <thresholds_clr>39</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>49</thresholds>
+                <thresholds_clr>47</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="flash" type="3" enable="true" min_temp="0" step="2">
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <flash>1</flash>
+                </action>
+            </item>
+        </sensor_temp>
+    </scene>
+
+    <scene name="screenoff" id="20004">
+        <sensor_temp name="cpu" type="0" enable="true" min_temp="0" step="3">
+            <item>
+                <thresholds>40</thresholds>
+                <thresholds_clr>38</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>1200</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>1517000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>900</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>46</thresholds>
+                <thresholds_clr>44</thresholds_clr>
+                <action>
+                    <cpu>1306000</cpu>
+                    <cpu_a15>807000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="pa" type="1" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>1300</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>900</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>52</thresholds>
+                <thresholds_clr>50</thresholds_clr>
+                <action>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+        <sensor_temp name="ucurrent" type="2" enable="true" min_temp="0" step="5">
+              <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>1200</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>900</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>48</thresholds>
+                <thresholds_clr>46</thresholds_clr>
+                <action>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="flash" type="3" enable="true" min_temp="0" step="2">
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <flash>1</flash>
+                </action>
+            </item>
+        </sensor_temp>
+    </scene>
+
+    <scene name="com.tencent.mobileqq|com.tencent.mm|com.sina.weibo" id="100000">
+        <sensor_temp name="cpu" type="0" enable="true" min_temp="0" step="3">
+            <item>
+                <thresholds>40</thresholds>
+                <thresholds_clr>38</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>0</cpu_a15>
+                    <gpu>0</gpu>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>44</thresholds>
+                <thresholds_clr>42</thresholds_clr>
+                <action>
+                    <cpu>0</cpu>
+                    <cpu_a15>1517000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>500</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>46</thresholds>
+                <thresholds_clr>44</thresholds_clr>
+                <action>
+                    <cpu>1306000</cpu>
+                    <cpu_a15>807000</cpu_a15>
+                    <gpu>360000000</gpu>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                    <lcd>0</lcd>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="pa" type="1" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>600</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+         </sensor_temp>
+
+        <sensor_temp name="ucurrent" type="2" enable="true" min_temp="0" step="5">
+            <item>
+                <thresholds>39</thresholds>
+                <thresholds_clr>37</thresholds_clr>
+                <action>
+                    <ucurrent>900</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>42</thresholds>
+                <thresholds_clr>40</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+              <item>
+                <thresholds>45</thresholds>
+                <thresholds_clr>43</thresholds_clr>
+                <action>
+                    <ucurrent>350</ucurrent>
+                    <bcurrent>0</bcurrent>
+                </action>
+            </item>
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <shutdown>10000</shutdown>
+                </action>
+            </item>
+        </sensor_temp>
+
+        <sensor_temp name="flash" type="3" enable="true" min_temp="0" step="2">
+            <item>
+                <thresholds>75</thresholds>
+                <thresholds_clr>73</thresholds_clr>
+                <action>
+                    <flash>1</flash>
+                </action>
+            </item>
+        </sensor_temp>
+    </scene>
+</thermal>

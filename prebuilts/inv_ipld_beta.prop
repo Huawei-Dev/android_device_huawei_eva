@@ -1,0 +1,11 @@
+[General Settings]
+BASE_PATH=/data/hwzd_logs/gps_log/ipa
+DEBUG_MASK=383
+
+GNSS_DUTY_CYCLE_ENABLE=0
+GNSS_DUTY_CYCLE_OFF_SECS=10
+[Valid range 20 - 200 meters]
+LOC_UNC_LIMIT_METERS=100
+
+[Negative value no limit, zero disables logging]
+MAX_DISK_SPACE_MB=150
