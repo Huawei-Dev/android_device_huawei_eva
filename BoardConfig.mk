@@ -70,6 +70,7 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 
 # CMHW
 BOARD_HARDWARE_CLASS := \
+    $(LOCAL_PATH)/cmhw \
     hardware/cyanogen/cmhw
 
 # Display
