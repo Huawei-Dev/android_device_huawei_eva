@@ -96,8 +96,8 @@ ro.product.cucc.rtsplive=true
 ro.com.android.mobiledata=true
 
 ro.config.hw_camera_opt=1
-
 persist.sys.fingersense=1
+ro.hardware.alter=Hisilicon Kirin 955
 
 # local
 ro.config.hw_lte_support=true
