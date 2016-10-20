@@ -100,7 +100,7 @@ ro.config.hw_camera_opt=1
 # local
 ro.config.hw_lte_support=true
 ro.dual.sim.phone=false
-persist.sys.dualcards=true
+persist.sys.dualcards=false
 ro.config.hw_sim2airplane=false
 ro.frp.pst=/dev/block/platform/hi_mci.0/by-name/frp
 ro.config.hw_rcs_product=true
