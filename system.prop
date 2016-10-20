@@ -124,4 +124,4 @@ ro.config.reduce_sar_type1=001
 rild.libpath=/system/lib64/libbalong-ril.so
 persist.dsds.enabled=false
 
-ro.telephony.ril_class=HuaweiRIL
+ro.telephony.ril_class=HwHisiRIL
