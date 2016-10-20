@@ -1203,39 +1203,6 @@ service modemlogcat_VIA /system/bin/modemlogcat_via -t /dev/ttySPI1 -c /system/e
     disabled
     oneshot
 
-service shlogd /system/bin/shs
-    class late_start
-    user root
-    group system
-    disabled
-
-service shex /system/bin/shex -p
-    user root
-    group system
-    disabled
-    oneshot
-
-on property:sys.shlogd=0
-    stop shlogd
-on property:sys.shlogd=1
-    start shlogd
-
-on property:persist.sys.huawei.debug.on=1
-    start shex
-    start shlogd
-
-on property:persist.sys.huawei.debug.on=0
-    stop shlogd
-
-service kmsgcat_cp /sbin/kmsgcat -r 4096 -n 25 -i /dev/cshell_log -f /data/hwzd_logs/cp_log/modemlog/modemkmsg-log
-    class late_start
-    user root
-    group system
-    disabled
-
-service defragd /system/bin/defragd
-    class late_start
-
 service perfhub /system/bin/perfhub
     class core
     user system
@@ -1259,6 +1226,7 @@ on property:service.bootanim.exit=1
 on property:persist.sys.huawei.debug.on=0
     chown system system /sys/class/sensors/sensorhub_dump
     chmod 0660 /sys/class/sensors/sensorhub_dump
+
 on property:persist.sys.huawei.debug.on=1
     chown system system /sys/class/sensors/sensorhub_dump
     chmod 0664 /sys/class/sensors/sensorhub_dump
@@ -1275,15 +1243,6 @@ on property:sys.boot_completed=1 && property:ro.product.device=eva
 
 on property:persist.sys.hw_camera_on=* && property:ro.config.hw_camera_opt=1
     write /proc/sys/kernel/boost_killing ${persist.sys.hw_camera_on}
-
-on property:ro.runmode=*
-    start telemntncat
-
-service telemntncat /system/bin/dmesgcat -i /proc/telemntn -e b -r 10240 -z 3 -n 1 -f /data/hisi_logs/running_trace/telemntncat-log
-    class late_start
-    user root
-    group system
-    disabled
 
 on property:persist.sys.fingersense=1
     write /sys/devices/platform/huawei_sensor/set_fingersense_enable 1
@@ -1334,15 +1293,6 @@ on property:ro.multi.rild=false
 on property:ro.hardware.alter=*
     write /proc/sys/kernel/hardware_alter ${ro.hardware.alter}
 
-service kmemleak_debug /system/bin/sh /system/etc/kmemleak.debug.sh
-    class late_start
-    user root
-    disabled
-    oneshot
-
-on property:persist.sys.kmemleak.debug=1
-    start kmemleak_debug
-
 service atcmdserver  /system/bin/atcmdserver
     class main
     disabled
@@ -1356,10 +1306,6 @@ service diagserver /system/bin/diagserver
     class main
     user root
     disabled
-
-service goldeneye /system/bin/goldeneye
-    class main
-    user root
 
 on property:ro.runmode=factory
     chmod 0775 /data/media/0/Music
@@ -1382,12 +1328,6 @@ on property:bastet.service.enable=true
 service jankservice /system/bin/jankservice
     class late_start
 
-service systeminfo /system/bin/systeminfo
-    class main
-    user root
-    disabled
-    oneshot	
-
 service preparesdservice /system/bin/vdc volume storagetosd
    class main
    disabled
@@ -1408,74 +1348,7 @@ service logserver /system/bin/logserver
     group system
     oneshot
 
-service logctl_service /sbin/logctl_service -m 1
-    class late_start
-    user root
-    group system
-    oneshot
-
-service logcat_service /sbin/logctl_service -m 1 -t 1
-    class late_start
-    user root
-    group system
-    oneshot
-
-service fac_log_service /system/bin/factory_log_service -m 1
-    class late_start
-    user root
-    group system
-    disabled
-    oneshot
-
-service applogcat /system/bin/logcat -v threadtime -r4096 -z 10 -n 5 -f /data/android_logs/applogcat-log
-    class late_start
-    user root
-    group system
-    disabled
-
 service hilogcat /system/bin/hilogcat -r16 -z 10 -n 5 -f /data/android_logs/hilogcat-log
-    class late_start
-    user root
-    group system
-    disabled
-
-service rillogcat /system/bin/logcat -b radio -v threadtime -r4096 -z 5 -n 5 -f /data/android_logs/rillogcat-log
-    class late_start
-    user root
-    group system
-    disabled
-
-service kmsglogcat /sbin/kmsgcat -l -r 4096 -z 5 -n 5 -f /data/android_logs/kmsgcat-log
-    class late_start
-    user root
-    group system
-    disabled
-
-service isplogcat /system/bin/isplogcat
-    class late_start
-    user root
-    group system
-    disabled
-
-service inputlogcat /system/bin/eventcat -lrt -k 1024 -z 5 -m 5 -f /data/hwzd_logs/input-log/input-log
-    class late_start
-    user root
-    group system
-    disabled
-
-service chargelogcat /system/bin/chargelogcat -r 4096 -n 5 -z 4 -t 5 -p /data/android_logs/
-    class late_start
-    user root
-    group system
-    disabled
-
-service sleeplogcat /system/bin/sleeplogcat -t 2 -p /data/android_logs/sleeplog/ -f /system/etc/pwrlog.cfg
-    class late_start
-    user root
-    group system
-    disabled
-
-service eventslogcat /system/bin/logcat -b events -v threadtime -r4096 -z 2 -n 2 -f /data/android_logs/eventslogcat-log
     class late_start
     user root
     group system
@@ -1503,16 +1376,6 @@ service hw_cdma_service /system/bin/hw_cdmamodem_service /dev/acm_cdma_log /dev/
     user root
     disabled
 
-service ddrtest /system/bin/do_ddrtest
-    user root
-    disabled
-    oneshot
-
-service stop_ddrtest /system/bin/do_ddrtest
-    user root
-    disabled
-    oneshot
-
 service thermal-daemon /system/bin/thermal-daemon
     class main
     user system
@@ -1528,38 +1391,10 @@ service hwpged /system/bin/hwpged
     socket MsgHubSock stream 0660 root system
     user root
 
-service powerlogd /system/bin/powerlogd
-    class core
-    socket powerlogd stream 0600 system system
-    socket powerlogdr seqpacket 0600 system system
-    socket powerlogdw dgram 0220 system system
-
 service chargemonitor /system/bin/chargemonitor
     class late_start
     user root
     group system
-
-on property:debug.rt.ddr.test=1
-    stop ddrtest
-    start ddrtest
-on property:debug.rt.ddr.test=2
-    start ddrtest
-on property:debug.rt.ddr.test=3
-    start ddrtest
-on property:debug.rt.ddr.test=4
-    start stop_ddrtest
-
-service mapper /system/bin/sh /system/bin/mappersh
-    class late_start
-    user root
-    group system
-    disabled
-
-on property:persist.sys.huawei.debug.on=*
-    restart logcat_service
-
-on property:ro.logsystem.usertype=*
-    write /proc/log-usertype ${ro.logsystem.usertype}
 
 service bastetd /system/bin/bastetd
     class main
@@ -1571,15 +1406,3 @@ service teecd /sbin/teecd
     class core
     user root
     group root
-
-service teelogcat /system/bin/tlogcat -f
-    class late_start
-    user root
-    group system
-    disabled
-
-on property:persist.sys.huawei.debug.on=1
-    start teelogcat
-
-on property:persist.sys.huawei.debug.on=0
-    stop teelogcat
