@@ -65,8 +65,6 @@ on init
     mkdir /mnvm2:0/SC 0755 root root
     mkdir /mnvm2:0/modem_nv 0755 root root
 
-    #mkdir /modem_fw
-
     mkdir /mnt/shell 0700 shell shell
     mkdir /mnt/shell/emulated 0700 shell shell
 
@@ -207,15 +205,11 @@ on fs
     wait /dev/block/platform/hi_mci.0/by-name/oeminfo
     start oeminfo_nvm
 
-    #wait /dev/block/platform/hi_mci.0/by-name/system
-    #wait /dev/block/platform/hi_mci.0/by-name/userdata
+    wait /dev/block/platform/hi_mci.0/by-name
     mount_all fstab.hi3650
 
     wait /dev/block/platform/hi_mci.0/by-name/cust
     mount ext4 /dev/block/platform/hi_mci.0/by-name/cust /cust wait ro nosuid nodev
-
-    #wait /dev/block/platform/hi_mci.0/by-name/modem_fw
-    #mount ext4 /dev/block/platform/hi_mci.0/by-name/modem_fw /modem_fw ro
 
     chown radio radio sys/devices/platform/balong_power/state
 
@@ -615,10 +609,12 @@ on boot
     chown system system /sys/touchscreen/sleep_status
     chown system system /sys/touchscreen/wakeup_gesture_enable
     chown system system /sys/touchscreen/easy_wakeup_gesture
+    chmod 0664 /sys/touchscreen/easy_wakeup_gesture
     chown system system /sys/touchscreen/easy_wakeup_control
     chown system system /sys/touchscreen/easy_wakeup_position
     chown system system /sys/touchscreen/easy_wakeup_supported_gestures
     chown system system /sys/touchscreen/touch_glove
+    chmod 0664 /sys/touchscreen/touch_glove
     chown system system /sys/touchscreen/touch_window
     chown system system /sys/touchscreen/touch_sensitivity
     chown system system /sys/touchscreen/fw_update_sd
@@ -1274,7 +1270,7 @@ on property:ro.runmode=factory
 on property:sys.boot_completed=1 && property:ro.product.device=HWNXT
     write /proc/sys/kernel/boost_killing 1
 
-on property:sys.boot_completed=1 && property:ro.product.device=HWEVA
+on property:sys.boot_completed=1 && property:ro.product.device=eva
     setprop persist.sys.hw_camera_on 0
 
 on property:persist.sys.hw_camera_on=* && property:ro.config.hw_camera_opt=1
