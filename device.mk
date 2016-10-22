@@ -145,6 +145,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     fstab.hi3650 \
     init.chip.usb.rc \
+    init.hi3650.power.rc \
     init.hi3650.rc \
     init.hi3650.usb.rc \
     init.rc \
