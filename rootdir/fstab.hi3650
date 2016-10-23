@@ -7,8 +7,8 @@
 
 #<src>                                          	<mnt_point>    	<type>	<mnt_flags and options>				     		<fs_mgr_flags>
 /dev/block/platform/hi_mci.0/by-name/system     	/system        	ext4	ro,barrier=1	                                     				wait
-userdata					   	/data	       	f2fs	nosuid,nodev,noatime,discard,inline_data,inline_xattr	  			wait,formattable,forceencrypt=footer
-userdata					   	/data	       	ext4	nosuid,nodev,noatime,nodiratime,noauto_da_alloc,nobarrier  			wait,check,formattable,forceencrypt=footer
+userdata					   	/data	       	f2fs	nosuid,nodev,noatime,discard,inline_data,inline_xattr	  			wait,check,formattable,encryptable=footer
+userdata					   	/data	       	ext4	nosuid,nodev,noatime,nodiratime,noauto_da_alloc,nobarrier  			wait,check,formattable,encryptable=footer
 /dev/block/platform/hi_mci.0/by-name/cache      	/cache         	ext4	rw,nosuid,nodev,noatime,data=ordered                    			wait,check,formattable
 
 /dev/block/platform/hi_mci.0/by-name/splash2         	/splash2        ext4    rw,nosuid,nodev,noatime,data=ordered						wait,check
