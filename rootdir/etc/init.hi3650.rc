@@ -304,7 +304,7 @@ on post-fs
     chmod 0440 /dev/log/radio_boot
 
 on post-fs-data
-    mkdir /data/nfc 0770 nfc nfc
+    mkdir /data/nfc 0755 nfc nfc
 
     mkdir /data/hwzd_logs 0775 system system
     restorecon_recursive /data/hwzd_logs
