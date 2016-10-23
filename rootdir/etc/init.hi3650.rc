@@ -948,7 +948,6 @@ on start_latestart_class
 
 on start_other_action
     start gpsdaemon
-    exec /system/bin/start_110x_service.sh
 
 on nonencrypted
     trigger start_latestart_class
