@@ -36,10 +36,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/vdec_atlas.cfg:system/etc/vdec_atlas.cfg \
-    $(LOCAL_PATH)/prebuilts/topazhp.cfg:system/etc/topazhp.cfg
-
-PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
@@ -51,11 +47,33 @@ PRODUCT_COPY_FILES += \
 
 # Misc
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilts/cfg_austin_hisi.ini:system/etc/cfg_austin_hisi.ini \
+    $(LOCAL_PATH)/prebuilts/cfg_hisi.ini:system/etc/cfg_hisi.ini \
+    $(LOCAL_PATH)/prebuilts/cfg_jazz_hisi.ini:system/etc/cfg_jazz_hisi.ini \
+    $(LOCAL_PATH)/prebuilts/chargemonitor_config.xml:system/etc/chargemonitor_config.xml \
+    $(LOCAL_PATH)/prebuilts/clatd.conf:system/etc/clatd.conf \
+    $(LOCAL_PATH)/prebuilts/device_monitor_for_nff.conf:system/etc/device_monitor_for_nff.conf \
+    $(LOCAL_PATH)/prebuilts/factory_modem.cfg:system/etc/factory_modem.cfg \
     $(LOCAL_PATH)/prebuilts/inv_ipld.prop:system/etc/inv_ipld.prop \
-    $(LOCAL_PATH)/prebuilts/inv_ipld_beta.prop:system/etc/inv_ipld_beta.prop
+    $(LOCAL_PATH)/prebuilts/inv_ipld_beta.prop:system/etc/inv_ipld_beta.prop \
+    $(LOCAL_PATH)/prebuilts/topazhp.cfg:system/etc/topazhp.cfg \
+    $(LOCAL_PATH)/prebuilts/vdec_atlas.cfg:system/etc/vdec_atlas.cfg \
+    $(LOCAL_PATH)/prebuilts/viacbp82d_log.bcfg:system/etc/viacbp82d_log.bcfg \
+    $(LOCAL_PATH)/prebuilts/viacbp82d_shutdown_log.bcfg:system/etc/viacbp82d_shutdown_log.bcfg
+
+# GPS
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilts/gps4752.conf:system/etc/gps4752.conf \
+    $(LOCAL_PATH)/prebuilts/gps4752config.xml:system/etc/gps4752config.xml \
+    $(LOCAL_PATH)/prebuilts/gps47531config.xml:system/etc/gps47531config.xml \
+    $(LOCAL_PATH)/prebuilts/gps47531config_beta.xml:system/etc/gps47531config_beta.xml \
+    $(LOCAL_PATH)/prebuilts/gps47531config_cl.xml:system/etc/gps47531config_cl.xml \
+    $(LOCAL_PATH)/prebuilts/gps47531config_cl_beta.xml:system/etc/gps47531config_cl_beta.xml
 
 # Thermal engine
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilts/poweroff_thermald.xml:system/etc/poweroff_thermald.xml \
+    $(LOCAL_PATH)/prebuilts/temperaturemonitor_setting.xml:system/etc/temperaturemonitor_setting.xml \
     $(LOCAL_PATH)/prebuilts/thermald.xml:system/etc/thermald.xml \
     $(LOCAL_PATH)/prebuilts/thermald_performance.xml:system/etc/thermald_performance.xml \
     $(LOCAL_PATH)/prebuilts/thermald_qcoff.xml:system/etc/thermald_qcoff.xml
