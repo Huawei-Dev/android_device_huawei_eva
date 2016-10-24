@@ -134,6 +134,10 @@ PRODUCT_PACKAGES += \
     libbt-vendor \
     bt_vendor.conf
 
+# Charger
+PRODUCT_PACKAGES += \
+    charger
+
 # Device state monitor
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilts/device_state_monitor.conf:system/etc/device_state_monitor.conf
