@@ -1013,6 +1013,7 @@ service HwCamCfgSvr /system/bin/HwCamCfgSvr hi3650 EVA
     user media
     group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc mediadrm system
     ioprio rt 4
+    writepid /dev/cpuset/system-background/tasks
 
 service vr_daemon /system/bin/vr_daemon
     class main
