@@ -180,10 +180,6 @@ PRODUCT_PACKAGES += \
     libshim_exif \
     libshim_gralloc
 
-# OpenGL Renderer
-PRODUCT_PACKAGES += \
-    libGLES_android
-
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.build.subproduct=F2FS \
     ro.magic.api.version=0.1 \
