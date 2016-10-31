@@ -25,8 +25,9 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import /init.hi3650.usb.rc
+import /init.hi3650.gps.rc
 import /init.hi3650.power.rc
+import /init.hi3650.usb.rc
 
 on early-init
     chmod 0660 /dev/hwlog_switch
@@ -38,6 +39,9 @@ on early-init
     setprop persist.service.hdb.enable true
 
 on init
+    # NFC
+    symlink /dev/pn544 /dev/pn54x
+
     mkdir /cust 0755 root root
 
     mkdir /splash2 0775 root system
@@ -201,7 +205,7 @@ on init
     chmod 0660 /dev/soundtrigger_dma_drv
 
 on fs
-    export LD_SHIM_LIBS /system/lib64/libcutils.so|libshim_log.so:/system/lib/libcutils.so|libshim_log.so:/system/lib/libdmd.so|libshim_log.so:/system/lib64/libdmd.so|libshim_log.so:/system/vendor/lib64/egl/libGLES_mali.so|libshim_log.so:/system/lib64/libhwuibp.so|lib_hw_ui.so:/system/lib/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib64/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib/libandroid.so|libshim_android.so:/system/lib/libhwmediamonitorservice.so|libshim_log.so:/system/lib/hw/audio.primary.hi3650.so|libshim_audioroute.so:/system/lib/hwcam/hwcam.hi3650.m.EVA.so|libshim_exif.so:/system/lib64/hwcam/hwcam.hi3650.m.EVA.so|libshim_exif.so
+    export LD_SHIM_LIBS /system/lib64/libcutils.so|libshim_log.so:/system/lib/libcutils.so|libshim_log.so:/system/lib/libdmd.so|libshim_log.so:/system/lib64/libdmd.so|libshim_log.so:/system/vendor/lib64/egl/libGLES_mali.so|libshim_log.so:/system/lib64/libhwuibp.so|lib_hw_ui.so:/system/lib/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib64/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib/libhwmediamonitorservice.so|libshim_log.so:/system/lib/hw/audio.primary.hi3650.so|libshim_audioroute.so
 
     wait /dev/block/platform/hi_mci.0/by-name/oeminfo
     start oeminfo_nvm
@@ -321,21 +325,6 @@ on post-fs-data
     chown root system /sys/kernel/exmbist_test/test_entry
     chmod 0664 /sys/kernel/exmbist_test/test_result
 
-    mkdir /data/gps 775 system system
-    mkdir /data/gps/log 770
-
-    mkdir /data/hwzd_logs/gps_log 775 root system
-    mkdir /data/hwzd_logs/gps_log/.tmp 775 gps system
-	
-    mkdir /data/hwzd_logs/gps_log/ipa 775 root system
-    mkdir /data/hwzd_logs/gps_log/ipa/log 775 root system
-
-    mkdir /data/hwzd_logs/gps_log/gps 775 gps system
-    mkdir /data/hwzd_logs/gps_log/lhd 775 gps system
-
-    mkdir /data/hwzd_logs/gps_log/gps/.tmp 775 gps system
-    mkdir /data/hwzd_logs/gps_log/lhd/.tmp 775 gps system
-
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     chown wifi wifi /data/misc/wifi/p2p_supplicant.conf
@@ -431,8 +420,6 @@ on post-fs-data
     chmod 660 /dev/appvcom7
     chown system system /dev/appvcom8
     chmod 660 /dev/appvcom8
-    chown gps system /dev/appvcom9
-    chmod 664 /dev/appvcom9
     chown radio radio /dev/appvcom10
     chmod 660 /dev/appvcom10
     chmod 660 /dev/appvcom11
@@ -547,22 +534,6 @@ on boot
     chown system system /sys/module/bcmdhd/parameters/firmware_path
     chown system system /sys/module/bcmdhd/parameters/region
     write /sys/module/bcmdhd/parameters/region ${ro.product.locale.region}
-
-    chown root system /dev/ttyAMA3
-    chmod 0664 /dev/ttyAMA3
-    chown root system /dev/gpstty
-    chmod 0664 /dev/gpstty
-    chown gps system /dev/appvcom9
-    chmod 0664 /dev/appvcom9
-    chown root system /proc/gps/nstandby
-    chmod 0664 /proc/gps/nstandby
-
-    chmod 660 /data/gps/.flp.interface.pipe.to_gpsd
-    chmod 660 /data/gps/.flp.interface.pipe.to_jni
-    chmod 660 /data/gps/.gps.interface.pipe.to_gpsd
-    chmod 660 /data/gps/.gps.interface.pipe.to_jni
-    chmod 660 /data/gps/.pipe.gpsd_to_lhd.to_client
-    chmod 660 /data/gps/.pipe.gpsd_to_lhd.to_server
 
     chown system system /sys/class/leds/lcd_backlight0/brightness
     chmod 644 /sys/class/leds/lcd_backlight0/brightness
@@ -930,7 +901,6 @@ on property:vold.decrypt=trigger_restart_framework
     trigger restart-sdcardfs
     trigger start_main_class
     trigger start_latestart_class
-    trigger start_other_action
     trigger data_ready
 
 on property:vold.decrypt=trigger_default_encryption
@@ -945,9 +915,6 @@ on start_main_class
 
 on start_latestart_class
     class_start late_start
-
-on start_other_action
-    start gpsdaemon
 
 on nonencrypted
     trigger start_latestart_class
@@ -1099,65 +1066,6 @@ service iprenew_bnep0 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
-
-service gpsdaemon /system/bin/gpsdaemon
-    class late_start
-    oneshot
-
-service gpsd_47531  /system/bin/glgps47531 -c /data/gps/gpsconfig.xml
-    socket gps seqpacket 660 gps system
-    class late_start
-    user gps
-    group system inet sdcard_rw
-    disabled
-
-service gpsdcl_47531  /system/bin/glgps47531cl -c /data/gps/gpsconfig.xml
-    socket gps seqpacket 660 gps system
-    class late_start
-    user gps
-    group system inet sdcard_rw
-    disabled
-
-service gpsd_4752  /system/bin/glgps4752 -c /data/gps/gpsconfig.xml
-    socket gps seqpacket 660 gps system
-    class late_start
-    user gps
-    group system inet sdcard_rw
-    disabled
-
-service ipld /system/bin/inv_ipld  /system/etc/inv_ipld_beta.prop
-    class late_start
-    user system
-    group system
-    disabled
-
-service lhd_4774  /system/bin/lhd4774  /data/gps/lhd.conf
-    class late_start
-    user gps
-    group system inet net_raw sdcard_rw
-    ioprio be 0
-    disabled
-
-service lhdcl_4774  /system/bin/lhd4774cl  /data/gps/lhd.conf
-    class late_start
-    user gps
-    group system inet net_raw sdcard_rw
-    ioprio be 0
-    disabled
-
-service gpsd_4774  /system/bin/glgps4774 -c /data/gps/gpsconfig.xml
-    socket gps seqpacket 660 gps system
-    class late_start
-    user gps
-    group system inet sdcard_rw
-    disabled
-
-service gpsdcl_4774  /system/bin/glgps4774cl -c /data/gps/gpsconfig.xml
-    socket gps seqpacket 660 gps system
-    class late_start
-    user gps
-    group system inet sdcard_rw
-    disabled
 
 service device-monitor /system/bin/device_monitor
      class main
