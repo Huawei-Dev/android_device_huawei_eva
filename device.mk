@@ -178,7 +178,6 @@ PRODUCT_PACKAGES += \
 
 # LIBShim
 PRODUCT_PACKAGES += \
-    libshim_exif \
     libshim_gralloc
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
