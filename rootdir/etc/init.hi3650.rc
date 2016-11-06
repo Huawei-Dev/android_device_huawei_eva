@@ -956,6 +956,7 @@ on charger
     chown system system /sys/class/hw_power/charger/charge_data/iin_thermal_aux
     chmod 0660 /sys/class/hw_power/charger/charge_data/limit_charging
     chown system system /sys/class/hw_power/charger/charge_data/limit_charging
+    write /sys/devices/virtual/graphics/fb0/mode "U:1080x1920p-0"
     start charger_huawei
     start hw_ueventd
     start oeminfo_nvm
@@ -1268,7 +1269,7 @@ service teecd /system/bin/teecd
     user root
     group root
 
-service charger_huawei /sbin/charger -c
+service charger_huawei /sbin/healthd -c
    class charger
    user root
    group graphics
