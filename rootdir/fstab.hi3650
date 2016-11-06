@@ -7,8 +7,8 @@
 
 #<src>                                          	<mnt_point>    	<type>	<mnt_flags and options>				     		<fs_mgr_flags>
 /dev/block/platform/hi_mci.0/by-name/system     	/system        	ext4	ro,barrier=1	                                     				wait
-userdata					   	/data	       	f2fs	nosuid,nodev,noatime,discard,inline_data,inline_xattr	  			wait,check,formattable,encryptable=footer
-userdata					   	/data	       	ext4	nosuid,nodev,noatime,nodiratime,noauto_da_alloc,nobarrier  			wait,check,formattable,encryptable=footer
+/dev/block/platform/hi_mci.0/by-name/userdata	   	/data	       	f2fs	nosuid,nodev,noatime,discard,inline_data,inline_xattr	  			wait,check,formattable,encryptable=footer
+/dev/block/platform/hi_mci.0/by-name/userdata	   	/data	       	ext4	nosuid,nodev,noatime,nodiratime,noauto_da_alloc,nobarrier  			wait,check,formattable,encryptable=footer
 /dev/block/platform/hi_mci.0/by-name/cache      	/cache         	ext4	rw,nosuid,nodev,noatime,data=ordered                    			wait,check,formattable
 
 /dev/block/platform/hi_mci.0/by-name/splash2         	/splash2        ext4    rw,nosuid,nodev,noatime,data=ordered						wait,check
@@ -24,5 +24,5 @@ userdata					   	/data	       	ext4	nosuid,nodev,noatime,nodiratime,noauto_da_al
 /dev/block/platform/hi_mci.0/by-name/boot       	/boot          	emmc    defaults                                                 			recoveryonly
 /dev/block/platform/hi_mci.0/by-name/recovery   	/recovery      	emmc    defaults                                                 			recoveryonly
 
-/devices/hi_mci.1/mmc_host/mmc1/*               	auto           	auto    defaults									wait,voldmanaged=sdcard1:auto,encryptable=userdata
-/devices/ff200000.hisi_usb/ff100000.dwc3/*      	auto           	auto    defaults									wait,voldmanaged=usb:auto
+/devices/hi_mci.1/mmc_host/mmc1/*               	auto           	auto    defaults									voldmanaged=sdcard1:auto,encryptable=userdata
+/devices/ff200000.hisi_usb/ff100000.dwc3/*      	auto           	auto    defaults									voldmanaged=usb:auto
