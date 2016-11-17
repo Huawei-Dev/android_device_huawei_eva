@@ -36,39 +36,18 @@ on early-init
     chown system system /dev/hwlog_tag
     chmod 0662 /dev/hwlog_jank
 
-    setprop persist.service.hdb.enable true
-
 on init
     # NFC
     symlink /dev/pn544 /dev/pn54x
 
-    mkdir /cust 0755 root root
-
-    mkdir /splash2 0775 root system
-    mkdir /splash2/log 0775 system log
-
-    mkdir /3rdmodem 0750 radio radio
-    mkdir /3rdmodemnvm 0750 radio radio
-    mkdir /3rdmodemnvmbkp 0750 radio radio
-    mkdir /3rdmodemnvm/viacbp82d 0740 radio radio
-    mkdir /3rdmodemnvmbkp/viacbp82d 0740 radio radio
-
-    mkdir /sec_storage 0600 root root
-    mkdir /sec_storage/vsim 0600 root root
-
-    mkdir /modem_log 0755 root root
-    mkdir /modem_log/log 0665 root root
-    mkdir /modem_log/modem_nv 0665 root root
-    mkdir /modem_log/DrvLog 0665 root root
-    mkdir /modem_log/DrvLog/Sim0 0665 root root
-    mkdir /modem_log/DrvLog/Sim1 0665 root root
-    mkdir /modem_log/DrvLog/Sim2 0660 root root
-    mkdir /modem_log/dump 0660 root root
-    mkdir /modem_log/yaffs0 0755 root root
-
-    mkdir /mnvm2:0 0755 root root
-    mkdir /mnvm2:0/SC 0755 root root
-    mkdir /mnvm2:0/modem_nv 0755 root root
+    mkdir /cust
+    mkdir /splash2
+    mkdir /3rdmodem
+    mkdir /3rdmodemnvm
+    mkdir /3rdmodemnvmbkp
+    mkdir /sec_storage
+    mkdir /modem_log
+    mkdir /mnvm2:0
 
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
@@ -80,12 +59,6 @@ on init
     wait /dev/nve0
     chown root system /dev/nve0
     chmod 0770 /dev/nve0
-
-    chown radio radio /dev/vmodem
-    chmod 0660 /dev/vmodem
-
-    chown radio radio /dev/ttyAMA1
-    chmod 0660 /dev/ttyAMA1
 
     chmod 0400 /dev/hisi_teelog
 
@@ -213,11 +186,22 @@ on init
     chown media media /dev/soundtrigger_dma_drv
     chmod 0660 /dev/soundtrigger_dma_drv
 
-on fs
-    export LD_SHIM_LIBS /system/lib64/libcutils.so|libshim_log.so:/system/lib/libcutils.so|libshim_log.so:/system/lib/libdmd.so|libshim_log.so:/system/lib64/libdmd.so|libshim_log.so:/system/vendor/lib64/egl/libGLES_mali.so|libshim_log.so:/system/lib64/libhwuibp.so|lib_hw_ui.so:/system/lib/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib64/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib/libhwmediamonitorservice.so|libshim_log.so:/system/lib/hw/audio.primary.hi3650.so|libshim_audioroute.so
+    mkdir /lib
+    mkdir /lib/firmware/ 0666 root root
+    chown media media /system/vendor/firmware/isp_fw.elf
+    chmod 0400 /system/vendor/firmware/isp_fw.elf
+    chown media media /system/vendor/firmware/isp_bw.elf
+    chmod 0400 /system/vendor/firmware/isp_bw.elf
 
+    symlink /system/vendor/firmware/isp_fw.elf /lib/firmware/isp_fw.elf
+    symlink /system/vendor/firmware/isp_bw.elf /lib/firmware/isp_bw.elf
+
+on early-fs
     wait /dev/block/platform/hi_mci.0/by-name/oeminfo
     start oeminfo_nvm
+
+on fs
+    export LD_SHIM_LIBS /system/lib64/libcutils.so|libshim_log.so:/system/lib/libcutils.so|libshim_log.so:/system/lib/libdmd.so|libshim_log.so:/system/lib64/libdmd.so|libshim_log.so:/system/vendor/lib64/egl/libGLES_mali.so|libshim_log.so:/system/lib64/libhwuibp.so|libshim_hwui.so:/system/lib/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib64/hw/gralloc.hi3650.so|libshim_gralloc.so:/system/lib/libhwmediamonitorservice.so|libshim_log.so:/system/lib/hw/audio.primary.hi3650.so|libshim_audioroute.so
 
     wait /dev/block/platform/hi_mci.0/by-name
     mount_all fstab.hi3650
@@ -227,10 +211,15 @@ on fs
 
     chown radio radio sys/devices/platform/balong_power/state
 
-    restorecon_recursive /modem_log
+    chown root root /sec_storage
+    chmod 600 /sec_storage
 
     restorecon /splash2
+    chmod 775 /splash2
+    chown root system /splash2
 
+    mkdir /splash2/log 0775 system log
+    symlink /splash2/fac_log /data/log/fac_log
     symlink /splash2 /log
 
     wait /dev/block/mmcblk0p35
@@ -317,33 +306,6 @@ on post-fs
 on post-fs-data
     mkdir /data/nfc 0755 nfc nfc
 
-    mkdir /data/hwzd_logs 0775 system system
-    restorecon_recursive /data/hwzd_logs
-
-    mkdir /data/log 0775 system system
-    restorecon_recursive /data/log
-
-    mkdir /data/hisi_logs 0770 root system
-    restorecon_recursive /data/hisi_logs
-
-    chown root system /sys/kernel/exmbist_test/test_entry
-    chmod 0664 /sys/kernel/exmbist_test/test_entry
-
-    chown root system /sys/kernel/exmbist_test/test_entry
-    chmod 0664 /sys/kernel/exmbist_test/test_result
-
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    chown wifi wifi /data/misc/wifi/p2p_supplicant.conf
-    chmod 0660 /data/misc/wifi/p2p_supplicant.conf
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    restorecon_recursive /data/misc/wifi
-
-    mkdir /data/hwzd_logs/3rdcp-log 0775 radio nvram
-    mkdir /data/nvram/ 0770 root nvram
-    mkdir /data/nvram/md_via 0770 root nvram
-    mkdir /data/pppd_via 0770 radio system
-
     mkdir /splash2/sim 0775 root system
     mkdir /splash2/sim/offlinelogs 0775 root system
     write /splash2/sim/offlinelogs/balong_modem1_simoffline.txt  0
@@ -366,11 +328,61 @@ on post-fs-data
 
     symlink /splash2/sim/offlinelogs /data/offlinelogs
 
+    mkdir /modem_log/log 0665
+    mkdir /modem_log/DrvLog 0665
+    mkdir /modem_log/DrvLog/Sim0 0665
+    mkdir /modem_log/DrvLog/Sim1 0665
+    restorecon_recursive /modem_log
+
+    setprop camera.dis.flag 2
+    setprop camera.tnr.flag 1
+
+    mkdir /data/camera 771 system camera
+    chmod 664 /data/camera/hisi_sensor0
+    chmod 664 /data/camera/hisi_sensor1
+    mkdir /data/img 770 system camera
+
+    mkdir /data/hwzd_logs 0775 system system
+    restorecon_recursive /data/hwzd_logs
+
+    mkdir /data/log 0775 system system
+    restorecon_recursive /data/log
+
+    mkdir /data/hisi_logs 0770 root system
+    restorecon_recursive /data/hisi_logs
+
+    chown root system /sys/kernel/exmbist_test/test_entry
+    chmod 0664 /sys/kernel/exmbist_test/test_entry
+
+    chown root system /sys/kernel/exmbist_test/test_entry
+    chmod 0664 /sys/kernel/exmbist_test/test_result
+
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    chown wifi wifi /data/misc/wifi/p2p_supplicant.conf
+    chmod 0660 /data/misc/wifi/p2p_supplicant.conf
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    restorecon_recursive /data/misc/wifi
+
+    mkdir /data/hwzd_logs/3rdcp-log 0775 radio system
+    mkdir /data/nvram/ 0770 root system
+    mkdir /data/nvram/md_via 0770 root system
+    mkdir /data/pppd_via 0770 radio system
+
+    chown radio radio /dev/vmodem
+    chmod 0660 /dev/vmodem
+
+    chown radio radio /dev/ttyAMA1
+    chmod 0660 /dev/ttyAMA1
+
     setprop viatel.device.fls  spi.2.ttySPI
     setprop viatel.device.at   spi.10.ttySPI
     setprop viatel.device.data spi.0.ttySPI
     setprop viatel.device.pcv spi.4.ttySPI
     setprop viatel.device.gps spi.5.ttySPI
+
+    mkdir /3rdmodemnvm/viacbp82d 0740 radio radio
+    mkdir /3rdmodemnvmbkp/viacbp82d 0740 radio radio
 
     chown radio radio /3rdmodem/
     chown radio radio /3rdmodem/modem_image
@@ -387,6 +399,10 @@ on post-fs-data
     chown radio radio /3rdmodemnvm/viacbp82d/fsm_1.img
     chown radio radio /3rdmodemnvm/viacbp82d/fsm_cl.img
     chown radio radio /3rdmodemnvmbkp/viacbp82d/fsm_cl_backup.img
+
+    chmod 0750 /3rdmodem/
+    chmod 0750 /3rdmodemnvm/
+    chmod 0750 /3rdmodemnvmbkp/
 
     chmod 0740 /3rdmodem/modem_image
     chmod 0740 /3rdmodem/modem_image/viacbp82d
@@ -467,13 +483,6 @@ on post-fs-data
 
     chown system system /proc/getslice
 
-    setprop camera.dis.flag 2
-    setprop camera.tnr.flag 1
-    mkdir /data/camera 771 system camera
-    chmod 664 /data/camera/hisi_sensor0
-    chmod 664 /data/camera/hisi_sensor1
-    mkdir /data/img 770 system camera
-
     mkdir /data/share 0770 media_rw media_rw
     mkdir /data/samba 0755 media_rw media_rw
 
@@ -543,7 +552,7 @@ on boot
     write /sys/module/bcmdhd/parameters/region ${ro.product.locale.region}
 
     chown system system /sys/class/leds/lcd_backlight0/brightness
-    chmod 644 /sys/class/leds/lcd_backlight0/brightness
+    chmod 664 /sys/class/leds/lcd_backlight0/brightness
     chown system system /sys/class/graphics/fb0/sbl_ctrl
     chown system system /sys/class/graphics/fb0/lcd_color_temperature
     chown system system /sys/class/graphics/fb0/led_rg_lcd_color_temperature
@@ -698,15 +707,6 @@ on boot
     chmod 0664 /sys/nfc/nfc_close_type
     chown nfc nfc /sys/nfc/nfc_single_channel
     chmod 0444 /sys/nfc/nfc_single_channel
-
-    mkdir -p /lib/firmware/ 0666 root root
-    chown media media /system/vendor/firmware/isp_fw.elf
-    chmod 0400 /system/vendor/firmware/isp_fw.elf
-    chown media media /system/vendor/firmware/isp_bw.elf
-    chmod 0400 /system/vendor/firmware/isp_bw.elf
-
-    symlink /system/vendor/firmware/isp_fw.elf /lib/firmware/isp_fw.elf
-    symlink /system/vendor/firmware/isp_bw.elf /lib/firmware/isp_bw.elf
 
     chown system system /dev/sensorhub
     chmod 0660 /dev/sensorhub
@@ -889,6 +889,20 @@ on boot
     chmod 0660 /sys/class/hw_power/charger/charge_data/voltage_sys
     chmod 0660 /sys/class/hw_power/charger/charge_data/vr_charger_type
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/msg_policy
+
+    write /sys/class/devfreq/ddrfreq/max_freq 1333000000
+    write /sys/class/devfreq/ddrfreq/min_freq 120000000
+    write /sys/class/devfreq/ddrfreq/polling_interval 50
+
+    write /sys/class/devfreq/ddrfreq_up_threshold/max_freq 1333000000
+    write /sys/class/devfreq/ddrfreq_up_threshold/min_freq 120000000
+    write /sys/class/devfreq/ddrfreq_up_threshold/polling_interval 50
+
+    write /sys/class/devfreq/gpufreq/max_freq 900000000
+    write /sys/class/devfreq/gpufreq/min_freq 120000000
+    write /sys/class/devfreq/gpufreq/polling_interval 50
+
+    write /proc/balong/stats/boot_time 1
 
 on property:vold.decrypt=trigger_reset_main
     class_reset main

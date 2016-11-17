@@ -25,6 +25,8 @@ on early-init
 
     start ueventd
 
+    setprop persist.service.hdb.enable true
+
 on init
     sysclktz 0
 
@@ -664,6 +666,7 @@ service servicemanager /system/bin/servicemanager
     onrestart restart media
     onrestart restart surfaceflinger
     onrestart restart drm
+    onrestart restart perfhub
 
 service vold /system/bin/vold \
         --blkid_context=u:r:blkid:s0 --blkid_untrusted_context=u:r:blkid_untrusted:s0 \
