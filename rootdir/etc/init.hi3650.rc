@@ -143,6 +143,8 @@ on init
     chmod 664 /sys/class/devfreq/gpufreq/mali_ondemand/animation_boost
     chown system system /sys/class/devfreq/gpufreq/mali_ondemand/animation_boost_freq
     chmod 664 /sys/class/devfreq/gpufreq/mali_ondemand/animation_boost_freq
+    chown system system /sys/class/devfreq/gpufreq/polling_interval
+    chmod 664 /sys/class/devfreq/gpufreq/polling_interval
 
     chown system system /sys/class/devfreq/ddrfreq/max_freq
     chmod 664 /sys/class/devfreq/ddrfreq/max_freq
@@ -154,8 +156,23 @@ on init
     chmod 664 /sys/class/devfreq/ddrfreq/cur_freq
     chown system system /sys/class/devfreq/ddrfreq/available_frequencies
     chmod 664 /sys/class/devfreq/ddrfreq/available_frequencies
+    chown system system /sys/class/devfreq/ddrfreq/polling_interval
+    chmod 664 /sys/class/devfreq/ddrfreq/polling_interval
     chown system system /sys/kernel/set_hmp_thresholds/policy
     chmod 0664 /sys/kernel/set_hmp_thresholds/policy
+
+    chown system system /sys/class/devfreq/ddrfreq_up_threshold/max_freq
+    chmod 664 /sys/class/devfreq/ddrfreq_up_threshold/max_freq
+    chown system system /sys/class/devfreq/ddrfreq_up_threshold/min_freq
+    chmod 664 /sys/class/devfreq/ddrfreq_up_threshold/min_freq
+    chown system system /sys/class/devfreq/ddrfreq_up_threshold/ddr_bandwidth
+    chmod 664 /sys/class/devfreq/ddrfreq_up_threshold/ddr_bandwidth
+    chown system system /sys/class/devfreq/ddrfreq_up_threshold/cur_freq
+    chmod 664 /sys/class/devfreq/ddrfreq_up_threshold/cur_freq
+    chown system system /sys/class/devfreq/ddrfreq_up_threshold/available_frequencies
+    chmod 664 /sys/class/devfreq/ddrfreq_up_threshold/available_frequencies
+    chown system system /sys/class/devfreq/ddrfreq_up_threshold/polling_interval
+    chmod 664 /sys/class/devfreq/ddrfreq_up_threshold/polling_interval
 
     chown system system /sys/class/thermal/thermal_zone0/mode
     chmod 0664 /sys/class/thermal/thermal_zone0/mode
@@ -175,9 +192,13 @@ on init
     chown system system /sys/kernel/perfhub/cpuaffinity
     chmod 0660 /sys/kernel/perfhub/cpuaffinity
 
-    write /sys/class/devfreq/gpufreq/min_freq 360000000
-
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 806400
+    chown system system /sys/devices/virtual/graphics/fb0/blank
+    chmod 0660 /sys/devices/virtual/graphics/fb0/blank
+    chown system system /sys/devices/virtual/graphics/fb0/vsync_event
+    chmod 0660 /sys/devices/virtual/graphics/fb0/vsync_event
+    chown system system /sys/devices/virtual/graphics/fb0/mode
+    chmod 0660 /sys/devices/virtual/graphics/fb0/mode
+    write /sys/devices/virtual/graphics/fb0/mode "U:1080x1920p-0"
 
     write /proc/sys/kernel/hung_task_panic 1
     write /proc/sys/kernel/hung_task_timeout_secs 120
@@ -963,16 +984,6 @@ on charger
     start limit_current
     start atcmdserver
     start diagserver
-
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor powersave
-    write /sys/kernel/set_hmp_thresholds/enable 0
-    write /sys/kernel/hmp/up_threshold 1024
-    write /sys/kernel/hmp/down_threshold 1023
-    write /sys/class/devfreq/ddrfreq/max_freq 1333000000
-    write /sys/class/devfreq/ddrfreq/min_freq 120000000
-    write /sys/class/devfreq/ddrfreq_up_threshold/max_freq 1333000000
-    write /sys/class/devfreq/ddrfreq_up_threshold/min_freq 120000000
-    write /sys/kernel/set_hmp_thresholds/enable 1
 
 # Start Service
 
