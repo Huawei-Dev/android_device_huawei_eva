@@ -59,8 +59,6 @@ PRODUCT_COPY_FILES += \
 # GPS
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilts/gps.conf:system/etc/gps.conf \
-    $(LOCAL_PATH)/prebuilts/gps4752.conf:system/etc/gps4752.conf \
-    $(LOCAL_PATH)/prebuilts/gps4752config.xml:system/etc/gps4752config.xml \
     $(LOCAL_PATH)/prebuilts/gps47531config.xml:system/etc/gps47531config.xml \
     $(LOCAL_PATH)/prebuilts/gps47531config_beta.xml:system/etc/gps47531config_beta.xml \
     $(LOCAL_PATH)/prebuilts/gps47531config_cl.xml:system/etc/gps47531config_cl.xml \
