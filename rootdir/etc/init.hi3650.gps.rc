@@ -55,4 +55,4 @@ on boot
     class main
     user system
     group system
-    disable
+    disabled
