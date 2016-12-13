@@ -202,9 +202,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 #PRODUCT_COPY_FILES += \
 #    $(LOCAL_PATH)/prebuilts/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-#    $(LOCAL_PATH)/prebuilts/libnfc_brcm_eva.conf:system/etc/libnfc_brcm_eva.conf \
-#    $(LOCAL_PATH)/prebuilts/libnfc-nxp.conf:system/etc/libnfc-nxp.conf \
-#    $(LOCAL_PATH)/prebuilts/libnfc_nxp_eva.conf:system/etc/libnfc_nxp_eva.conf
+#    $(LOCAL_PATH)/prebuilts/libnfc-nxp.conf:system/etc/libnfc-nxp.conf
 
 #PRODUCT_COPY_FILES += \
 #    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
