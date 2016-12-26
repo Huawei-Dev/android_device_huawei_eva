@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-extern "C" void __hi_log_print(void);
+extern void __hi_log_print(void);
 
-extern "C" void exif_entry_gps_initialize(void);
+extern void exif_entry_gps_initialize(void);
 
-extern "C" void atrace_async_begin_body_HwCam(void);
+extern void atrace_async_begin_body_HwCam(void);
