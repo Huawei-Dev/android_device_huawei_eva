@@ -26,7 +26,6 @@
 #include <unistd.h>
 
 #include <utils/Log.h>
-#include "property_service.h"
 
 #include "power.h"
 
