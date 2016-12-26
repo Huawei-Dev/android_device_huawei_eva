@@ -63,7 +63,6 @@ LOCAL_SRC_FILES:= \
     ui/GraphicBufferAllocator.cpp \
     ui/GraphicBuffer.cpp \
     ui/GraphicBufferMapper.cpp \
-    surface-control.cpp \
     huawei.c
 
 LOCAL_SHARED_LIBRARIES := \
