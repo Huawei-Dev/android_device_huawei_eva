@@ -27,6 +27,15 @@ LOCAL_MODULE := libshim_icu
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
 
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := \
+    icu55.c \
+    gui/SensorManager.cpp
+LOCAL_SHARED_LIBRARIES := libicuuc libicui18n libcutils libutils liblog libbinder libhardware libgui libsync
+LOCAL_MODULE := libshim_gps
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)
+
 # Camera
 include $(CLEAR_VARS)
 

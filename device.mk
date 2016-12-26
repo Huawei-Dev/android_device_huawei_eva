@@ -177,6 +177,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     libshim_camera \
     libshim_gralloc \
+    libshim_gps \
     libshim_icu
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
