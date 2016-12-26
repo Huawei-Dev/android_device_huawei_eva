@@ -15,14 +15,6 @@ on post-fs-data
     mkdir /data/hwzd_logs/gps_log/gps/.tmp 775 gps system
     mkdir /data/hwzd_logs/gps_log/lhd/.tmp 775 gps system
 
-    chmod 660 /data/gps/.flp.interface.pipe.to_gpsd
-    chmod 660 /data/gps/.flp.interface.pipe.to_jni
-    chmod 660 /data/gps/.gps.interface.pipe.to_gpsd
-    chmod 660 /data/gps/.gps.interface.pipe.to_jni
-    chmod 660 /data/gps/.pipe.gpsd_to_lhd.to_client
-    chmod 660 /data/gps/.pipe.gpsd_to_lhd.to_server
-
-
 on boot
     chown root system /dev/ttyAMA3
     chmod 0664 /dev/ttyAMA3
@@ -32,6 +24,13 @@ on boot
     chmod 0664 /dev/appvcom9
     chown root system /proc/gps/nstandby
     chmod 0664 /proc/gps/nstandby
+
+    chmod 660 /data/gps/.flp.interface.pipe.to_gpsd
+    chmod 660 /data/gps/.flp.interface.pipe.to_jni
+    chmod 660 /data/gps/.gps.interface.pipe.to_gpsd
+    chmod 660 /data/gps/.gps.interface.pipe.to_jni
+    chmod 660 /data/gps/.pipe.gpsd_to_lhd.to_client
+    chmod 660 /data/gps/.pipe.gpsd_to_lhd.to_server
 
     service gpsdaemon /system/bin/gpsdaemon
     class main
