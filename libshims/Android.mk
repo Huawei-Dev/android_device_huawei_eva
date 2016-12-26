@@ -19,3 +19,12 @@ LOCAL_SRC_FILES := hw_gralloc.c
 LOCAL_MODULE := libshim_gralloc
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
+
+# Camera
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := huawei.c
+LOCAL_MODULE := libshim_camera
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)
+
+
